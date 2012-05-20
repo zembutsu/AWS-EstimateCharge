@@ -1,0 +1,42 @@
+#!/bin/sh
+
+# Plugin to monitor the AWS CloudWatch metrics "EstimatedCharges" by services
+# MIT License
+# Mar 20, 2012
+# version 0.0.1 Masahito Zembutsu (@zembutsu)
+
+if [ "$1" = "autoconf" ]; then
+        echo yes
+        exit 0
+fi
+
+if [ "$1" = "config" ]; then
+        echo 'graph_title AWS EstimatedCharges by services'
+        echo 'graph_args --base 1000 -l 0'
+        echo "graph_category AWS";
+        echo 'graph_vlabel USD'
+        echo 'graph_scale no'
+        echo 'graph_info EstimatedCharges by services'
+
+	FIRST=1;
+	for METRICS in AmazonEC2 AmazonRDS AmazonS3 AmazonRoute53 AmazonSimpleDB AmazonSNS AWSDataTransfer; do 
+                echo "${METRICS}.label ${METRICS}"
+                echo "${METRICS}.info EstimatedCharges service ${METRICS}"
+                echo "${METRICS}.type GAUGE"
+                if [ $FIRST -eq 1 ] ; then
+                        echo "${METRICS}.draw AREA"
+                        export FIRST=0;
+                else
+                        echo "${METRICS}.draw STACK"
+                fi
+	done
+
+        exit 0
+fi
+
+for METRICS in AmazonEC2 AmazonRDS AmazonS3 AmazonRoute53 AmazonSimpleDB AmazonSNS AWSDataTransfer; do
+	echo -n "${METRICS}.value "
+	grep ${METRICS} /var/lib/munin/plugin-aws-cloudwatch/EstimatedCharges_services.dat | cut -f2 -d' '
+done
+
+

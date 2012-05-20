@@ -1,0 +1,18 @@
+
+* Summary
+
+munin plugin for AWS EstimteCharge
+	- total
+	- each services
+
+* requirements
+
+AWS Cloudwatch CLI
+	mon-get-stats
+
+
+--
+Masahito Zembutsu (@zembutsu)
+
+
+
