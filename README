@@ -1,15 +1,26 @@
-
 * Summary
 
-munin plugin for AWS EstimteCharge
+- munin plugin for AWS EstimteCharge
 	- total
 	- each services
 
 * requirements
 
-AWS Cloudwatch CLI
+- Munin
+- AWS Cloudwatch CLI
 	mon-get-stats
 
+
+* Usage
+
+- you need cron entry. sample:
+
+*/15 * * * *       /home/zem/develop/aws/cloudwatch/CloudWatch-1.0.12.1/aws_EstimatedServices.sh
+*/15 * * * *       /home/zem/develop/aws/cloudwatch/CloudWatch-1.0.12.1/aws_EstimatedCharges.sh
+
+* History
+
+May 20, 2012  version 0.0.1
 
 --
 Masahito Zembutsu (@zembutsu)
